@@ -1,0 +1,326 @@
+/* ============ Daily Dojo — notebook aesthetic ============ */
+
+:root {
+  --paper: #f6f1e4;
+  --paper-line: rgba(43, 58, 85, 0.09);
+  --ink: #2b3a55;          /* blue-black pen */
+  --ink-soft: rgba(43, 58, 85, 0.62);
+  --ink-faint: rgba(43, 58, 85, 0.32);
+  --red: #c94f42;          /* teacher's red pen */
+  --red-soft: rgba(201, 79, 66, 0.75);
+  --pencil: #8c8471;
+
+  --font-marker: "Marker Felt", "Chalkboard SE", "Comic Sans MS", cursive;
+  --font-hand: "Bradley Hand", "Noteworthy", "Segoe Print", "Comic Sans MS", cursive;
+  --font-content: -apple-system, BlinkMacSystemFont, "Hiragino Sans",
+    "Hiragino Kaku Gothic ProN", "Helvetica Neue", Arial, sans-serif;
+}
+
+* { margin: 0; padding: 0; box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  font-family: var(--font-hand);
+  color: var(--ink);
+  /* ruled paper */
+  background:
+    repeating-linear-gradient(
+      to bottom,
+      transparent 0px, transparent 31px,
+      var(--paper-line) 31px, var(--paper-line) 32px
+    ),
+    var(--paper);
+  min-height: 100vh;
+  min-height: 100dvh;
+  -webkit-tap-highlight-color: transparent;
+  overscroll-behavior-y: none;
+}
+
+/* red margin line down the left, like an exercise book */
+body::before {
+  content: "";
+  position: fixed;
+  top: 0; bottom: 0;
+  left: max(30px, env(safe-area-inset-left));
+  width: 1.5px;
+  background: rgba(201, 79, 66, 0.28);
+  pointer-events: none;
+  z-index: 0;
+}
+
+#app {
+  position: relative;
+  z-index: 1;
+  max-width: 480px;
+  margin: 0 auto;
+  padding: calc(env(safe-area-inset-top) + 14px) 20px
+           calc(env(safe-area-inset-bottom) + 28px) 44px;
+  min-height: 100vh;
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+}
+
+.boot-note {
+  margin-top: 40vh;
+  text-align: center;
+  color: var(--pencil);
+  font-size: 18px;
+}
+
+/* ---------- typography ---------- */
+
+h1, h2, .marker {
+  font-family: var(--font-marker);
+  font-weight: 400;
+  letter-spacing: 0.5px;
+}
+
+h1 { font-size: 30px; transform: rotate(-0.6deg); }
+h2 { font-size: 22px; transform: rotate(-0.3deg); }
+
+.pencil-note {
+  color: var(--pencil);
+  font-size: 16px;
+}
+
+/* target-language content stays crisp and legible */
+.tl {
+  font-family: var(--font-content);
+  font-weight: 500;
+  line-height: 1.45;
+}
+.tl-big { font-size: 34px; font-weight: 600; }
+.tl-sentence { font-size: 21px; }
+.romaji {
+  font-family: var(--font-content);
+  font-size: 14.5px;
+  color: var(--ink-soft);
+  letter-spacing: 0.02em;
+}
+.meaning { font-size: 19px; }
+
+/* ---------- sketched cards & buttons ---------- */
+
+.card, .btn, .opt, .chip {
+  position: relative;
+  background: transparent;
+}
+.card > .sk-svg, .btn > .sk-svg, .opt > .sk-svg, .chip > .sk-svg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  pointer-events: none;
+}
+
+.card {
+  padding: 18px 18px 20px;
+  margin: 14px 0;
+}
+.card:nth-of-type(even) { transform: rotate(0.25deg); }
+.card:nth-of-type(odd)  { transform: rotate(-0.2deg); }
+
+.btn {
+  display: block;
+  width: 100%;
+  border: none;
+  font-family: var(--font-marker);
+  font-size: 21px;
+  color: var(--ink);
+  padding: 15px 18px;
+  margin: 12px 0;
+  min-height: 52px;
+  cursor: pointer;
+  text-align: center;
+}
+.btn:active { transform: translateY(2px) rotate(-0.4deg); }
+.btn.red { color: var(--red); }
+.btn.small { font-size: 17px; min-height: 44px; padding: 10px 14px; margin: 8px 0; }
+
+.opt {
+  display: block;
+  width: 100%;
+  border: none;
+  font-family: var(--font-content);
+  font-size: 18px;
+  color: var(--ink);
+  padding: 13px 14px;
+  margin: 10px 0;
+  min-height: 50px;
+  cursor: pointer;
+  text-align: left;
+}
+.opt:active { transform: translateY(2px); }
+
+.linklike {
+  background: none;
+  border: none;
+  font-family: var(--font-hand);
+  font-size: 17px;
+  color: var(--ink-soft);
+  text-decoration: underline dashed;
+  text-underline-offset: 4px;
+  padding: 10px 6px;
+  cursor: pointer;
+}
+
+/* ---------- header ---------- */
+
+.top-row {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 8px;
+  margin-bottom: 4px;
+}
+
+/* ---------- answer input ---------- */
+
+.answer-line {
+  width: 100%;
+  border: none;
+  border-bottom: 2.5px dashed var(--ink-faint);
+  background: transparent;
+  font-family: var(--font-content);
+  font-size: 22px;
+  color: var(--ink);
+  padding: 8px 4px 10px;
+  margin: 14px 0 4px;
+  border-radius: 0;
+}
+.answer-line:focus {
+  outline: none;
+  border-bottom-color: var(--ink);
+}
+.answer-line::placeholder { color: var(--ink-faint); font-size: 18px; }
+
+/* ---------- marks (tick / cross) ---------- */
+
+.mark-wrap {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin: 12px 0 2px;
+  min-height: 64px;
+}
+.mark-svg { width: 58px; height: 58px; flex: 0 0 auto; }
+.mark-svg path {
+  stroke: var(--red);
+  stroke-width: 7;
+  fill: none;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  animation: drawmark 0.45s ease-out forwards;
+}
+.mark-svg path:nth-child(2) { animation-delay: 0.28s; }
+@keyframes drawmark { to { stroke-dashoffset: 0; } }
+
+.mark-note {
+  font-family: var(--font-hand);
+  font-size: 19px;
+  color: var(--red);
+  transform: rotate(-1.2deg);
+}
+.correction {
+  margin-top: 6px;
+  font-family: var(--font-content);
+  font-size: 20px;
+  color: var(--red);
+  text-decoration: underline;
+  text-underline-offset: 5px;
+  text-decoration-thickness: 1.5px;
+}
+
+/* ---------- progress line ---------- */
+
+.session-meta {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  color: var(--pencil);
+  font-size: 15.5px;
+  margin: 2px 0 6px;
+}
+.phase-tag { transform: rotate(-1deg); }
+
+/* ---------- tallies & stats ---------- */
+
+.tally-svg { height: 34px; }
+.tally-svg path { stroke: var(--ink); stroke-width: 3; fill: none; stroke-linecap: round; }
+
+.stat-row {
+  display: flex;
+  gap: 10px;
+  align-items: baseline;
+  margin: 6px 0;
+  font-size: 18px;
+}
+.stat-big {
+  font-family: var(--font-marker);
+  font-size: 40px;
+  line-height: 1;
+}
+
+.bars-svg { width: 100%; height: 110px; }
+.bars-svg path { stroke: var(--ink); fill: none; stroke-width: 2; }
+.bars-svg text {
+  font-family: var(--font-hand);
+  font-size: 13px;
+  fill: var(--pencil);
+}
+.bars-svg text.count { fill: var(--ink); font-size: 14px; }
+
+/* score circle on the done screen */
+.score-circle {
+  position: relative;
+  width: 130px;
+  height: 130px;
+  margin: 6px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
+}
+.score-circle svg.ring { position: absolute; inset: 0; width: 100%; height: 100%; }
+.score-circle .ring path { stroke: var(--red); stroke-width: 4; fill: none; stroke-linecap: round; }
+.score-num { font-family: var(--font-marker); font-size: 34px; color: var(--red); transform: rotate(-3deg); }
+
+.grade-word {
+  text-align: center;
+  font-family: var(--font-marker);
+  font-size: 26px;
+  color: var(--red);
+  transform: rotate(-1.5deg);
+  margin: 8px 0;
+}
+
+/* ---------- misc ---------- */
+
+.center { text-align: center; }
+.spacer { flex: 1; }
+.row { display: flex; gap: 10px; }
+.row > * { flex: 1; }
+
+.hint-reveal {
+  margin-top: 8px;
+  font-family: var(--font-content);
+  font-size: 16px;
+  color: var(--ink-soft);
+}
+
+.divider-doodle { text-align: center; color: var(--ink-faint); font-size: 18px; letter-spacing: 6px; margin: 6px 0; }
+
+.footer-links {
+  display: flex;
+  justify-content: space-around;
+  margin-top: 10px;
+}
+
+ul.plain { list-style: none; }
+ul.plain li { margin: 8px 0; font-size: 17px; }
+
+.fade-in { animation: fadein 0.25s ease-out; }
+@keyframes fadein { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; } }

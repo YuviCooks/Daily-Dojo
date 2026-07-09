@@ -1,0 +1,25 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1024 1024">
+  <!-- paper background -->
+  <rect width="1024" height="1024" fill="#f6f1e4"/>
+  <!-- faint ruled lines -->
+  <g stroke="#d8cfba" stroke-width="4">
+    <line x1="0" y1="256" x2="1024" y2="256"/>
+    <line x1="0" y1="384" x2="1024" y2="384"/>
+    <line x1="0" y1="512" x2="1024" y2="512"/>
+    <line x1="0" y1="640" x2="1024" y2="640"/>
+    <line x1="0" y1="768" x2="1024" y2="768"/>
+  </g>
+  <!-- red margin line -->
+  <line x1="160" y1="0" x2="160" y2="1024" stroke="#c94f42" stroke-width="8" opacity="0.7"/>
+  <!-- hand-drawn double border -->
+  <path d="M 92 78 Q 500 60 936 84 Q 952 500 930 942 Q 512 958 88 936 Q 74 512 92 78 Z"
+        fill="none" stroke="#2b3a55" stroke-width="14" stroke-linecap="round"/>
+  <path d="M 104 94 Q 512 80 922 98 Q 936 508 918 926 Q 500 942 102 922 Q 92 500 104 94 Z"
+        fill="none" stroke="#2b3a55" stroke-width="6" stroke-linecap="round" opacity="0.55"/>
+  <!-- the character -->
+  <text x="500" y="560" font-family="Hiragino Mincho ProN, Yu Mincho, serif" font-size="520"
+        text-anchor="middle" dominant-baseline="middle" fill="#2b3a55">道</text>
+  <!-- red teacher tick -->
+  <path d="M 660 700 Q 700 780 730 800 Q 790 690 870 610"
+        fill="none" stroke="#c94f42" stroke-width="30" stroke-linecap="round"/>
+</svg>
